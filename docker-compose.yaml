@@ -1,0 +1,10 @@
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.10.7-management
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=${REBBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${REBBIT_PASSWORD}
+    ports:
+      - 15672:15672
