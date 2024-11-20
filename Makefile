@@ -3,7 +3,6 @@ EXEC = docker exec -it
 LOGS = docker logs
 BROCKER_FILE = docker_compose/broker.yaml
 APP_FILE = docker_compose/app.yaml
-MANAGE_PY = python manage.py
 APP_CONTAINER = admin-app
 
 

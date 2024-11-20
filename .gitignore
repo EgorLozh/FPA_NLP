@@ -1,2 +1,4 @@
 .venv/
 .env
+models/*
+!*models/vosk-model-small-ru-0.22

@@ -1,0 +1,8 @@
+services:
+  nlp-app:
+    container_name: nlp-app
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
