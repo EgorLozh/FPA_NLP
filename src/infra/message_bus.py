@@ -1,7 +1,6 @@
 from typing import Dict, List
 
-from src.domain.events.base import BaseEvent
-from src.infra.event_handler.base import BaseEventHandler
+from src.domain.events.base import BaseEvent, BaseEventHandler
 
 
 class MessageBus:

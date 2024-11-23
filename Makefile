@@ -3,7 +3,7 @@ EXEC = docker exec -it
 LOGS = docker logs
 BROCKER_FILE = docker_compose/broker.yaml
 APP_FILE = docker_compose/app.yaml
-APP_CONTAINER = admin-app
+APP_CONTAINER = nlp-app
 
 
 .PHONY: broker
@@ -38,3 +38,6 @@ down:
 .PHONY: restart
 restart: down all
 
+.PHONY: check-gpu
+check-gpu:
+	$(EXEC) $(APP_CONTAINER) nvidia-smi
