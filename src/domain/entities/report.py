@@ -1,11 +1,13 @@
 from dataclasses import dataclass
 
+from src.domain.entities.request import Request
 from src.domain.entities.base import BaseEntity
 
 
 @dataclass
 class Report(BaseEntity):
     marks: list[Mark]
+    request: Request
 
     @property
     def complited_persent(self) -> float:

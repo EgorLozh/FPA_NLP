@@ -1,0 +1,19 @@
+name: conda_venv
+channels:
+  - nvidia
+  - pytorch
+  - conda-forge
+  - defaults
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+  - https://repo.anaconda.com/pkgs/msys2
+dependencies:
+  - ipykernel
+  - python==3.12.7
+  - transformers
+  - pydub
+  - jupyter
+  - accelerate
+  - pytorch
+  - pytorch-cuda=12.1
+prefix: C:\Users\egor\.conda\envs\conda_venv

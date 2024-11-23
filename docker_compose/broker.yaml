@@ -1,6 +1,6 @@
-
 services:
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:3.10.7-management
     hostname: rabbitmq
     environment:
