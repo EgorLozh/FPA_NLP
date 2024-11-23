@@ -2,12 +2,12 @@ import pathlib
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
-from logger_service import LoggerService
+from src.infra.services.logger_service import LoggerService
 
 
 class LLMService:
     def __init__(self, model_name="Qwen/Qwen2.5-0.5B-Instruct"):
-        model_dir = pathlib.Path().resolve().parent().parent()/"models"
+        model_dir = pathlib.Path().resolve()/"models"
         self.logger = LoggerService()
 
         self.model = AutoModelForCausalLM.from_pretrained(
@@ -24,7 +24,7 @@ class LLMService:
     
 
     def generate(self, prompt, max_new_tokens=512):
-        self.logger(f"Generating response for prompt: {prompt[:min(len(prompt), 50)]}...")
+        self.logger.info(f"Generating response for prompt: {prompt[:min(len(prompt), 50)]}...")
 
         messages = [
             {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."},
@@ -37,9 +37,11 @@ class LLMService:
             **model_inputs,
             max_new_tokens= max_new_tokens
         )
-        generated_text = self.tokenizer.batch_decode(generated_ids)[0]
+        generated_text = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
-        self.logger(f"Generated response: {generated_text[:min(len(generated_text), 50)]}...")
+        assistent_answer = generated_text.split('assistant')[-1].strip() #берем только ответ от модели
 
-        return generated_text
+        self.logger.info(f"Generated response: {assistent_answer[:min(len(assistent_answer), 50)]}")
+
+        return assistent_answer
 

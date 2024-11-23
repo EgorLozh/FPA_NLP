@@ -3,6 +3,9 @@ import torch
 import pathlib
 
 from src.infra.services.logger_service import LoggerService
+from src.infra.services.video_service import VideoService
+from src.infra.services.speech2text_service import Speech2TextService
+from src.infra.services.LLM_service import LLMService
 
 def start():
     logger = LoggerService()
@@ -27,6 +30,21 @@ def start():
     except Exception as e:
         logger.error(f"Error loading model: {str(e)}")
         raise e
+    
+    # video_service = VideoService()
+    # video_service.download_video('https://drive.google.com/file/d/1FrI5WEzdrp-tZom3xWmJJ2SDdSMTZMt2/view?usp=sharing', 'video.mp4', True)
+    # video_service.extarct_audio('video.mp4', 'audio.mp3')
+
+    speech2text_service = Speech2TextService()
+
+    text = speech2text_service.recognize('audio.mp3')
+
+    llm_service = LLMService()
+    response = llm_service.generate(text+"""\n это был текст диалога двух человек,
+    продавец рассказал покупателю о том что он продает синих китов это так? отвечай только да или нет""")
+
+    print(response)
+    
 
 if __name__ == "__main__":
     start()

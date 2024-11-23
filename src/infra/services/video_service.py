@@ -1,5 +1,6 @@
 from moviepy.editor import VideoFileClip
 import requests
+import gdown
 
 from src.infra.services.logger_service import LoggerService
 
@@ -8,16 +9,33 @@ class VideoService:
     def __init__(self):
         self.logger = LoggerService()
 
-    def download_video(self, url, video_path):
-        self.logger.info(f"Downloading video from {url} to {video_path}")
+    def _request_download(self, url, video_path):
         response = requests.get(url, stream=True)
+        self.logger.info(response.json())
         if response.status_code == 200:
             with open(video_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
-            self.logger.info(f"Video downloaded to {video_path}")
         else:
             self.logger.error(f"Failed to download video from {url}")
+
+    def _google_drive_download(self, url, video_path):
+        gdown.download(url, video_path, quiet=False, fuzzy=True)        
+        
+
+    def download_video(self, url, video_path, from_google_drive=False):
+        self.logger.info(f"Downloading video from {url} to {video_path}")
+        try:
+            if from_google_drive:
+                self._google_drive_download(url, video_path)
+            else:
+                self._request_download(url, video_path)
+
+            self.logger.info(f"Video downloaded to {video_path}")
+
+        except Exception as e:
+            self.logger.error(f"Error downloading video: {str(e)}")
+
         # TODO: add error handling
         
 
