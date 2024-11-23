@@ -1,13 +1,12 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import pathlib
-import logging
 
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+from src.infra.services.logger_service import LoggerService
 
 def start():
+    logger = LoggerService()
+
     logger.info("Initializing model...")
     try:
         model_dir = pathlib.Path().resolve() / "models"
@@ -22,9 +21,6 @@ def start():
 
         if torch.cuda.is_available():
             model.to("cuda")
-            logger.info("Model moved to CUDA device.")
-        else:
-            logger.info("CUDA is not available.")
         
         logger.info(f"Model device: {model.device}")
 
