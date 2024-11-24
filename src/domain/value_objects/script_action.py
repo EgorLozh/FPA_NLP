@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from src.domain.value_objects.base import BaseValueObject
+from src.domain.entities.script import Script
 
 
 @dataclass
@@ -10,4 +11,3 @@ class ScriptAction(BaseValueObject):
     script: Script
 
 
-from src.domain.entities.script import Script

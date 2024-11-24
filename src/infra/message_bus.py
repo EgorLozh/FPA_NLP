@@ -4,7 +4,7 @@ from src.domain.events.base import BaseEvent, BaseEventHandler
 
 
 class MessageBus:
-    event_handlers: Dict[BaseEvent, List[BaseEventHandler]]
+    event_handlers: Dict[BaseEvent, List[BaseEventHandler]] = {}
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):

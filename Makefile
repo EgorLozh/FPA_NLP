@@ -17,8 +17,7 @@ app:
 
 
 .PHONY: all
-all:
-	broker app
+all: broker app
 
 
 .PHONY: broker-down
@@ -32,8 +31,7 @@ app-down:
 
 
 .PHONY: down
-down:
-	broker-down app-down
+down: broker-down app-down
 
 .PHONY: restart
 restart: down all

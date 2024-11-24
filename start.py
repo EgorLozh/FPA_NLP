@@ -2,12 +2,35 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import pathlib
 
+from configs import Settings
+
 from src.infra.services.logger_service import LoggerService
-from src.infra.services.video_service import VideoService
-from src.infra.services.speech2text_service import Speech2TextService
-from src.infra.services.LLM_service import LLMService
+from src.infra.broker.consumer import Consumer
+
+from src.domain.events.events import ComplitedReport
+from src.infra.broker.converter_mediator import ConverterMediator
+
+from src.infra.broker.strategies.dict_to_event import RequestMessageToRequestEventStrategy
+from src.infra.broker.strategies.event_to_dict import ComplitedReportToDictStrategy
+
 
 def start():
+    init_model()
+    init_converter()
+    
+    settings = Settings()
+
+    consumer = Consumer(
+        host=settings.REBBIT_HOST,
+        port=settings.AMQP_PORT,
+        queue=settings.REBBIT_CONSUME_QUEUE,
+        user=settings.REBBIT_USER,
+        password=settings.REBBIT_PASSWORD
+    )
+    consumer.consume()
+
+
+def init_model():
     logger = LoggerService()
 
     logger.info("Initializing model...")
@@ -30,21 +53,19 @@ def start():
     except Exception as e:
         logger.error(f"Error loading model: {str(e)}")
         raise e
-    
-    # video_service = VideoService()
-    # video_service.download_video('https://drive.google.com/file/d/1FrI5WEzdrp-tZom3xWmJJ2SDdSMTZMt2/view?usp=sharing', 'video.mp4', True)
-    # video_service.extarct_audio('video.mp4', 'audio.mp3')
 
-    speech2text_service = Speech2TextService()
 
-    text = speech2text_service.recognize('audio.mp3')
 
-    llm_service = LLMService()
-    response = llm_service.generate(text+"""\n это был текст диалога двух человек,
-    продавец рассказал покупателю о том что он продает синих китов это так? отвечай только да или нет""")
 
-    print(response)
-    
+
+def init_converter() -> ConverterMediator:
+    converter_mediator = ConverterMediator()
+
+    converter_mediator.register_dict_to_event_strategy('request', RequestMessageToRequestEventStrategy())
+    converter_mediator.register_event_to_dict_strategy(ComplitedReport, ComplitedReportToDictStrategy())
+
+    return converter_mediator
+
 
 if __name__ == "__main__":
     start()

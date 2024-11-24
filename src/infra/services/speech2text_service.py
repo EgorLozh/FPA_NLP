@@ -23,6 +23,7 @@ class Speech2TextService:
         audio_data = audio.raw_data  # Извлекаем PCM-данные
 
         results = []
+        self.logger.info("Recognizing audio...")
 
         step = 4000
         for i in range(0, len(audio_data), step):
@@ -32,6 +33,7 @@ class Speech2TextService:
 
         final_result = json.loads(rec.FinalResult())['text']
         results.append(final_result)
-
+        self.logger.info("Audio recognized")
+        
         full_text = '\n'.join([res for res in results if res])
         return full_text

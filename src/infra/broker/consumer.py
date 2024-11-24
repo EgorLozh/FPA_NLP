@@ -1,4 +1,4 @@
-from infra.broker.converter_mediator import ConverterMediator
+from src.infra.broker.converter_mediator import ConverterMediator
 from src.domain.events.base import BaseEvent
 from src.infra.broker.base import BaseBrokerClient
 from src.infra.message_bus import MessageBus

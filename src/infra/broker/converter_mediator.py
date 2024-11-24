@@ -4,8 +4,9 @@ from src.domain.events.base import BaseEvent
 from src.infra.broker.strategies.base import BaseEventToDictStrategy, BaseDictToEventStartegy
 
 class ConverterMediator:
-    dict_to_event_strategies: Dict[str, BaseDictToEventStartegy]
-    event_to_dict_strategies: Dict[Type[BaseEvent], BaseEventToDictStrategy]
+    def __init__(self):
+        self.dict_to_event_strategies: Dict[str, BaseDictToEventStartegy] = {}
+        self.event_to_dict_strategies: Dict[Type[BaseEvent], BaseEventToDictStrategy] = {}
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
