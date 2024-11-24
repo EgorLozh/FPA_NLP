@@ -19,5 +19,4 @@ class ComplitedReportToDictStrategy(BaseEventToDictStrategy):
             actions=script_actions
         )
         
-        return ReportMessageSchema(data=report).model_dump()
-
+        return ReportMessageSchema(type="report", data=report).model_dump()

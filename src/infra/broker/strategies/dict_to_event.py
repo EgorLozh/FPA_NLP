@@ -12,7 +12,7 @@ from src.infra.broker.schemas import RequestMessageSchema
 class RequestMessageToRequestEventStrategy(BaseDictToEventStartegy):
     @staticmethod
     def dict_to_event(json) -> BaseEvent:
-        request_message_schema = RequestMessageSchema.model_validate_json(json)
+        request_message_schema = RequestMessageSchema.model_validate(json)
 
         video = Video(
             url=request_message_schema.data.video.url

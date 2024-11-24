@@ -1,4 +1,6 @@
-from infra.broker.converter_mediator import ConverterMediator
+import json
+
+from src.infra.broker.converter_mediator import ConverterMediator
 from src.domain.events.base import BaseEvent
 from src.infra.broker.base import BaseBrokerClient
 
@@ -11,6 +13,7 @@ class Publisher(BaseBrokerClient):
             self.connect()
 
         message = self.converter_mediator.event_to_dict(event)
+        message = json.dumps(message)
 
         self.channel.basic_publish(exchange='', routing_key=self.queue, body=message)
     

@@ -1,7 +1,7 @@
 import pathlib
 
-from domain.entities.report import Report
-from domain.value_objects.mark import Mark
+from src.domain.entities.report import Report
+from src.domain.value_objects.mark import Mark
 from src.domain.events.base import BaseEventHandler
 from src.domain.events.events import ArrivedNewRequest, ComplitedReport
 from src.infra.message_bus import MessageBus
@@ -63,7 +63,7 @@ class NewRequestHandler(BaseEventHandler):
 
         self.logger.info("All actions processed")
 
-        # self.message_bus.handle(ComplitedReport(report=report, request=event.request))
+        self.message_bus.handle(ComplitedReport(report=report, request=event.request))
 
 
 
