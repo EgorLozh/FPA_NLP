@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 from src.domain.events.base import BaseEvent
 
 
-
 class BaseDictToEventStartegy(ABC):
     @staticmethod
     @abstractmethod

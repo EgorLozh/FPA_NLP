@@ -1,12 +1,19 @@
-from src.infra.broker.converter.converter import EventConverterMediator
+from functools import lru_cache
+
+from src.domain.events.events import ComplitedReport
+from src.infra.broker.converter_mediator import ConverterMediator
+
+from src.infra.broker.strategies.dict_to_event import RequestMessageToRequestEventStrategy
+from src.infra.broker.strategies.event_to_dict import ComplitedReportToDictStrategy
 
 
-def init_event_converter() -> EventConverterMediator:
-    event_converter_mediator = EventConverterMediator()
+@lru_cache(1)
+def init_converter() -> ConverterMediator:
+    converter_mediator = ConverterMediator()
 
-    # event_converter_mediator.register_event_to_dict_strategy()
-    # event_converter_mediator.register_dict_to_event_strategy()
+    converter_mediator.register_dict_to_event_strategy('request', RequestMessageToRequestEventStrategy())
+    converter_mediator.register_event_to_dict_strategy(ComplitedReport, ComplitedReportToDictStrategy())
 
-    return event_converter_mediator
+    return converter_mediator
 
-init_event_converter()
+init_converter()

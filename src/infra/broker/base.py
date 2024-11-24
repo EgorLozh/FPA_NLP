@@ -1,6 +1,5 @@
 import pika
 
-from src.infra.broker.converter.converter import EventConverterMediator
 
 
 class BaseBrokerClient:
@@ -18,8 +17,7 @@ class BaseBrokerClient:
             port=self.port,
             credentials=self.credentials
         ))
-        self.mediator = EventConverterMediator()
-    
+
     def connect(self):
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue=self.queue)
