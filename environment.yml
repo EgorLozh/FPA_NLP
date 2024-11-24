@@ -16,4 +16,11 @@ dependencies:
   - accelerate
   - pytorch
   - pytorch-cuda=12.1
+  - moviepy
+  - gdown
+  - pika
+  - pydantic
+  - pydantic-settings
+  - pip:
+    - vosk==0.3.45
 prefix: C:\Users\egor\.conda\envs\conda_venv

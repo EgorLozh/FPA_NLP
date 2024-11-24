@@ -7,4 +7,5 @@ services:
       - RABBITMQ_DEFAULT_USER=${REBBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${REBBIT_PASSWORD}
     ports:
-      - 15672:15672
+      - ${REBBIT_PORT}:15672
+      - ${AMQP_PORT}:5672

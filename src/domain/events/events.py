@@ -27,6 +27,6 @@ class ChekedScriptAction(BaseEvent):
 
 
 @dataclass
-class ComplitedRequest(BaseEvent):
+class ComplitedReport(BaseEvent):
     request: Request
     report: Report

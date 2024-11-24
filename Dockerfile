@@ -21,4 +21,4 @@ COPY . /app/
 
 SHELL ["conda", "run", "-n", "conda_venv", "/bin/bash", "-c"]
 
-ENTRYPOINT ["conda", "run", "-n", "conda_venv", "python", "start.py"]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "conda_venv", "python", "start.py"]
