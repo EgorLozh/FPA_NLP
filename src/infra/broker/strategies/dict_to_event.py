@@ -24,6 +24,7 @@ class RequestMessageToRequestEventStrategy(BaseDictToEventStartegy):
         script.actions = actions
 
         request = Request(
+            oid=request_message_schema.data.id,
             video=video,
             script=script
         )
