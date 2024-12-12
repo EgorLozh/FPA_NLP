@@ -17,29 +17,28 @@ from src.event_handlers.complited_report_handler import ComplitedReportHandler
 
 
 def start():
-    init_model()
-    init_converter()
-    init_message_bus()
-    
     settings = Settings()
 
+    init_model(model_name=settings.LLM_MODEL_NAME)
+    init_converter()
+    init_message_bus()
+
     consumer = Consumer(
-        host=settings.REBBIT_HOST,
+        host=settings.RABBIT_HOST,
         port=settings.AMQP_PORT,
-        queue=settings.REBBIT_CONSUME_QUEUE,
-        user=settings.REBBIT_USER,
-        password=settings.REBBIT_PASSWORD
+        queue=settings.RABBIT_CONSUME_QUEUE,
+        user=settings.RABBIT_USER,
+        password=settings.RABBIT_PASSWORD
     )
     consumer.consume()
 
 
-def init_model():
+def init_model(model_name: str):
     logger = LoggerService()
 
     logger.info("Initializing model...")
     try:
         model_dir = pathlib.Path().resolve() / "models"
-        model_name = "Qwen/Qwen2.5-0.5B-Instruct"
         
         model = AutoModelForCausalLM.from_pretrained(
             model_name,

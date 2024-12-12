@@ -23,10 +23,10 @@ class VideoService:
         gdown.download(url, video_path, quiet=False, fuzzy=True)        
         
 
-    def download_video(self, url, video_path, from_google_drive=False):
+    def download_video(self, url: str, video_path: str):
         self.logger.info(f"Downloading video from {url} to {video_path}")
         try:
-            if from_google_drive:
+            if url.startswith("https://drive.google.com/file/d/"):
                 self._google_drive_download(url, video_path)
             else:
                 self._request_download(url, video_path)

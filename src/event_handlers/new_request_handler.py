@@ -1,5 +1,6 @@
 import pathlib
 
+from configs import Settings
 from src.domain.entities.report import Report
 from src.domain.value_objects.mark import Mark
 from src.domain.events.base import BaseEventHandler
@@ -13,10 +14,11 @@ from src.infra.services.speech2text_service import Speech2TextService
 
 class NewRequestHandler(BaseEventHandler):
     def __init__(self):
+        self.settings = Settings()
         self.logger = LoggerService()
-        self.llm_service = LLMService()
+        self.llm_service = LLMService(self.settings.LLM_MODEL_NAME)
         self.video_service = VideoService()
-        self.speech2text_service = Speech2TextService()
+        self.speech2text_service = Speech2TextService(self.settings.VOSK_MODEL_NAME)
         self.message_bus = MessageBus()
 
     def delete_file(self, file_path):
@@ -27,10 +29,9 @@ class NewRequestHandler(BaseEventHandler):
 
         video = event.request.video
         video.file_name = str(path/"video.mp4")
-        from_google_drive = video.url.startswith("https://drive.google.com/file/d/")
-        self.video_service.download_video(video.url, video.file_name, from_google_drive)
+        self.video_service.download_video(video.url, video.file_name)
 
-        audio = str(path/"audio.mp3")
+        audio = str(path/"audio.wav")
         self.video_service.extarct_audio(video.file_name, audio)
 
         speech = self.speech2text_service.recognize(audio)

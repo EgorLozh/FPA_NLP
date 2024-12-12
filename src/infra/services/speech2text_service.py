@@ -1,6 +1,8 @@
 import json
 import pathlib
-import wave
+import librosa
+import noisereduce as nr
+import soundfile as sf
 from vosk import Model, KaldiRecognizer
 from pydub import AudioSegment
 
@@ -8,13 +10,21 @@ from src.infra.services.logger_service import LoggerService
 
 
 class Speech2TextService:
-    def __init__(self, model_name="vosk-model-small-ru-0.22"):
+    def __init__(self, model_name: str):
         model_dir = pathlib.Path().resolve()/"models"
         self.logger = LoggerService()
 
         self.model = Model(str(model_dir/model_name))
 
-    def recognize(self, audio_file, format="mp3"):
+    def remove_noises(self, audio_file: str):
+        y, sr = librosa.load(audio_file, sr=None)
+
+        reduced_noise = nr.reduce_noise(y=y, sr=sr)
+
+        sf.write(audio_file, reduced_noise, sr)
+
+
+    def recognize(self, audio_file: str, format="wav") -> str:
         rec = KaldiRecognizer(self.model, 16000)
 
         audio = AudioSegment.from_file(audio_file, format=format)
@@ -36,4 +46,5 @@ class Speech2TextService:
         self.logger.info("Audio recognized")
         
         full_text = '\n'.join([res for res in results if res])
+        self.logger.info(f"Full text: {full_text}")
         return full_text

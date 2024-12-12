@@ -21,6 +21,8 @@ dependencies:
   - pika
   - pydantic
   - pydantic-settings
+  - librosa
   - pip:
     - vosk==0.3.45
+    - noisereduce == 3.0.3
 prefix: C:\Users\egor\.conda\envs\conda_venv

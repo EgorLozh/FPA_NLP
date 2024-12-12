@@ -12,11 +12,11 @@ class ComplitedReportHandler(BaseEventHandler):
         self.message_bus = MessageBus()
         self.logger = LoggerService()
         self.publisher = Publisher(
-            host=settins.REBBIT_HOST,
+            host=settins.RABBIT_HOST,
             port=settins.AMQP_PORT,
-            queue=settins.REBBIT_PUBLISH_QUEUE,
-            user=settins.REBBIT_USER,
-            password=settins.REBBIT_PASSWORD
+            queue=settins.RABBIT_PUBLISH_QUEUE,
+            user=settins.RABBIT_USER,
+            password=settins.RABBIT_PASSWORD
         )
 
     def __call__(self, event: ComplitedReport) -> None:

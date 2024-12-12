@@ -6,7 +6,7 @@ from src.infra.services.logger_service import LoggerService
 
 
 class LLMService:
-    def __init__(self, model_name="Qwen/Qwen2.5-0.5B-Instruct"):
+    def __init__(self, model_name: str):
         model_dir = pathlib.Path().resolve()/"models"
         self.logger = LoggerService()
 

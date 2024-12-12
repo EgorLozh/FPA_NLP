@@ -17,7 +17,11 @@ REBBIT_PORT=15672
 AMQP_PORT=5672
 REBBIT_CONSUME_QUEUE=consume_queue
 REBBIT_PUBLISH_QUEUE=publish_queue
+
+MODEL_NAME=Qwen/Qwen2.5-3B-Instruct
 ```
+Переменная MODEL_NAME название модели Qwen, доступные модели на сайте https://huggingface.co/Qwen
+Модель для распознования речи - vosk. Необходимую модель можно скачать с https://alphacephei.com/vosk/models
 
 ## Makefile Команды
 Для запуска и управления приложением доступны следующие основные команды Makefile:
