@@ -6,11 +6,16 @@ import soundfile as sf
 from vosk import Model, KaldiRecognizer
 from pydub import AudioSegment
 
+from configs import Settings
 from src.infra.services.logger_service import LoggerService
 
 
 class Speech2TextService:
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str = None):
+        settings = Settings()
+        if model_name is None:
+            model_name = settings.VOSK_MODEL_NAME
+
         model_dir = pathlib.Path().resolve()/"models"
         self.logger = LoggerService()
 

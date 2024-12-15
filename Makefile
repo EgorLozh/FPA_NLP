@@ -8,7 +8,7 @@ APP_CONTAINER = nlp-app
 
 .PHONY: broker
 broker:
-	$(DC) -f $(BROCKER_FILE) up --build -d
+	$(DC) --env-file .env -f $(BROCKER_FILE) up --build -d 
 
 
 .PHONY: app

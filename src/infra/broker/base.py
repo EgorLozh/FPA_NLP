@@ -15,7 +15,8 @@ class BaseBrokerClient:
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host=self.host,
             port=self.port,
-            credentials=self.credentials
+            credentials=self.credentials,
+            heartbeat=600
         ))
 
     def connect(self):
@@ -25,4 +26,15 @@ class BaseBrokerClient:
     def close(self):
         if self.connection:
             self.connection.close()
+
+    def reconnect(self):
+        if self.connection and not self.connection.is_closed:
+            self.connection.close()
+
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(
+            host=self.host,
+            port=self.port,
+            credentials=self.credentials
+        ))
+        self.connect()
     

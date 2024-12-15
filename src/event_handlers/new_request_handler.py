@@ -14,11 +14,10 @@ from src.infra.services.speech2text_service import Speech2TextService
 
 class NewRequestHandler(BaseEventHandler):
     def __init__(self):
-        self.settings = Settings()
         self.logger = LoggerService()
-        self.llm_service = LLMService(self.settings.LLM_MODEL_NAME)
+        self.llm_service = LLMService()
         self.video_service = VideoService()
-        self.speech2text_service = Speech2TextService(self.settings.VOSK_MODEL_NAME)
+        self.speech2text_service = Speech2TextService()
         self.message_bus = MessageBus()
 
     def delete_file(self, file_path):
@@ -34,6 +33,7 @@ class NewRequestHandler(BaseEventHandler):
         audio = str(path/"audio.wav")
         self.video_service.extarct_audio(video.file_name, audio)
 
+        self.speech2text_service.remove_noises(audio)
         speech = self.speech2text_service.recognize(audio)
         video.speech = speech
 

@@ -46,9 +46,6 @@ def init_model(model_name: str):
             device_map="auto",
             cache_dir=model_dir
         )
-
-        if torch.cuda.is_available():
-            model.to("cuda")
         
         logger.info(f"Model device: {model.device}")
 
