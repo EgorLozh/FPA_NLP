@@ -33,7 +33,8 @@ class NewRequestHandler(BaseEventHandler):
         audio = str(path/"audio.wav")
         self.video_service.extarct_audio(video.file_name, audio)
 
-        self.speech2text_service.remove_noises(audio)
+        # TODO: change way of remooving noises now it is not working
+        # self.speech2text_service.remove_noises(audio)
         speech = self.speech2text_service.recognize(audio)
         video.speech = speech
 

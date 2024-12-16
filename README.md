@@ -42,7 +42,7 @@ make down # остановит и удалит все контейнеры.
   "data": {
     "id": "12345",
     "video": {
-      "url": "https://drive.google.com/file/d/1FrI5WEzdrp-tZom3xWmJJ2SDdSMTZMt2/view?usp=sharing"
+      "url": "https://drive.google.com/file/d/1cxeXHVLiXp1KySvxYWBhkuGmNZ6bupla/view?usp=sharing"
     },
     "actions": [
       {
@@ -50,7 +50,11 @@ make down # остановит и удалит все контейнеры.
         "weight": 10
       },
       {
-        "text": "продавец смог продать акции",
+        "text": "продавец смог назначить встречу",
+        "weight": 50
+      },
+      {
+        "text": "продавец обработал отказ клиента",
         "weight": 50
       },
       {
